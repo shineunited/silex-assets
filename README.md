@@ -3,6 +3,9 @@ Silex Assets
 
 A Silex package for managing local and remote static assets.
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/shineunited/silex-assets.svg?style=flat-square)](https://packagist.org/packages/shineunited/silex-assets)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.5-8892BF.svg?style=flat-square)](https://php.net/)
+[![Build Status](https://travis-ci.org/shineunited/silex-assets.svg?branch=master)](https://travis-ci.org/shineunited/silex-assets)
 
 Installation
 ------------
