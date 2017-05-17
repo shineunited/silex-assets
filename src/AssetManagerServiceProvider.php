@@ -5,18 +5,20 @@ namespace ShineUnited\Silex\Assets;
 use ShineUnited\Silex\Assets\AssetManager;
 use ShineUnited\Silex\Assets\AssetManagerExtension;
 
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Silex\Api\BootableProviderInterface;
 
 
-class AssetManagerServiceProvider implements ServiceProviderInterface {
+class AssetManagerServiceProvider implements ServiceProviderInterface, BootableProviderInterface {
 
-	public function register(Application $app) {
-		$app['assets'] = $app->share(function() use ($app) {
+	public function register(Container $app) {
+		$app['assets'] = function() use ($app) {
 			$manager = new AssetManager($app['assets.path']);
 
 			return $manager;
-		});
+		};
 
 		if(!isset($app['assets.path'])) {
 			$app['assets.path'] = '';
@@ -26,11 +28,11 @@ class AssetManagerServiceProvider implements ServiceProviderInterface {
 	public function boot(Application $app) {
 		// extend twig if present
 		if(isset($app['twig'])) {
-			$app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
+			$app->extend('twig', function($twig, $app) {
 				$twig->addExtension(new AssetManagerExtension($app['assets']));
 
 				return $twig;
-			}));
+			});
 		}
 	}
 }
